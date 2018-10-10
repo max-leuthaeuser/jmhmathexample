@@ -4,12 +4,12 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
+import java.util.List;
 
-import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.xtext.util.CancelIndicator;
 import org.eclipse.xtext.validation.CheckMode;
+import org.eclipse.xtext.validation.Issue;
 import org.openjdk.jmh.annotations.Benchmark;
-import org.openjdk.jmh.annotations.Param;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.infra.Blackhole;
 
@@ -24,9 +24,6 @@ public class MathDSLBenchmark extends AbstractDSLBenchmark {
 	public static class ParserBenchmarkState extends AbstractBenchmarkState {
 
 		private MathDSLGenerator generator = new MathDSLGenerator();
-
-		@Param({ "10000", "100000", "1000000" })
-		public int size;
 
 		public String inputString;
 
@@ -76,25 +73,25 @@ public class MathDSLBenchmark extends AbstractDSLBenchmark {
 			enableValidators();
 		}
 
-		public void validate(Expression exp) {
-			resourceValidator.validate(resource, CheckMode.ALL, CancelIndicator.NullImpl);
+		public List<Issue> validate() {
+			return resourceValidator.validate(resource, CheckMode.ALL, CancelIndicator.NullImpl);
 		}
 
 	}
 
 	@Benchmark
-	public void benchmarkParse(ParserBenchmarkState s, Blackhole sink) throws IOException {
+	public void benchmarkParse(ParserBenchmarkState s, Blackhole sink) {
 		sink.consume(s.parse(s.inputString));
 	}
 
 	@Benchmark
-	public void benchmarkInterpreter(InterpreterBenchmarkState s, Blackhole sink) throws IOException {
+	public void benchmarkInterpreter(InterpreterBenchmarkState s, Blackhole sink) {
 		sink.consume(s.interpret(s.exp));
 	}
 
 	@Benchmark
-	public void benchmarkValidator(ValidatorBenchmarkState s) throws IOException {
-		s.validate(s.exp);
+	public void benchmarkValidator(ValidatorBenchmarkState s, Blackhole sink) {
+		sink.consume(s.validate());
 	}
 
 }

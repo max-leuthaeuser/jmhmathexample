@@ -31,12 +31,6 @@ class ValidatorTest {
 		result.assertError(MathDSLPackage.Literals.DIV, MathDSLValidator.DIV_BY_ZERO)
 
 		result = parseHelper.parse('''
-			2 / (1 * 0)
-		''')
-		assertNotNull(result)
-		result.assertError(MathDSLPackage.Literals.DIV, MathDSLValidator.DIV_BY_ZERO)
-
-		result = parseHelper.parse('''
 			2 / 1
 		''')
 		assertNotNull(result)
