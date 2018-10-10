@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Automatic-Module-Name: de.itemis.jmhmathexample.ide
+Bundle-ManifestVersion: 2
+Bundle-Name: de.itemis.jmhmathexample.ide
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: de.itemis.jmhmathexample.ide; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: de.itemis.jmhmathexample,
+ org.eclipse.xtext.ide,
+ org.eclipse.xtext.xbase.ide,
+ org.antlr.runtime;bundle-version="[3.2.0,3.2.1)"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: de.itemis.jmhmathexample.ide.contentassist.antlr,
+ de.itemis.jmhmathexample.ide.contentassist.antlr.internal
+
