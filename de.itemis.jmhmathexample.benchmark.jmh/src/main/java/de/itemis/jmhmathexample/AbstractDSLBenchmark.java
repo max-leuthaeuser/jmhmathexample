@@ -17,7 +17,7 @@ import org.openjdk.jmh.annotations.State;
 
 import com.google.inject.Injector;
 
-@BenchmarkMode(Mode.AverageTime)
+@BenchmarkMode(Mode.All)
 abstract public class AbstractDSLBenchmark {
 
 	@State(Scope.Benchmark)
@@ -27,7 +27,7 @@ abstract public class AbstractDSLBenchmark {
 		protected IResourceValidator resourceValidator = injector.getInstance(ResourceValidatorImpl.class);
 		protected Resource resource = resourceSet.createResource(URI.createURI("dummy:/example.math"));
 
-		@Param({ "10000", "100000", "1000000" })
+		@Param({ "100", "1000", "10000" })
 		public int size;
 
 		private java.util.Map<EPackage, java.lang.Object> validators = new HashMap<>();
