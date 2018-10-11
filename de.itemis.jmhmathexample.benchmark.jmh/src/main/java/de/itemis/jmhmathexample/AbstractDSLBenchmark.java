@@ -17,7 +17,7 @@ import org.openjdk.jmh.annotations.State;
 
 import com.google.inject.Injector;
 
-@BenchmarkMode(Mode.All)
+@BenchmarkMode(Mode.SingleShotTime)
 abstract public class AbstractDSLBenchmark {
 
 	@State(Scope.Benchmark)
