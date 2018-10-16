@@ -22,10 +22,10 @@ abstract public class AbstractDSLBenchmark {
 
 	@State(Scope.Benchmark)
 	abstract public static class AbstractBenchmarkState {
-		protected Injector injector = new MathDSLStandaloneSetup().createInjectorAndDoEMFRegistration();
-		protected XtextResourceSet resourceSet = injector.getInstance(XtextResourceSet.class);
-		protected IResourceValidator resourceValidator = injector.getInstance(ResourceValidatorImpl.class);
-		protected Resource resource = resourceSet.createResource(URI.createURI("dummy:/example.math"));
+		private Injector injector;
+		protected XtextResourceSet resourceSet;
+		protected IResourceValidator resourceValidator;
+		protected Resource resource;
 
 		@Param({ "100", "1000", "10000" })
 		public int size;
@@ -33,15 +33,11 @@ abstract public class AbstractDSLBenchmark {
 		private java.util.Map<EPackage, java.lang.Object> validators = new HashMap<>();
 
 		public AbstractBenchmarkState() {
-			if (null == injector)
-				throw new RuntimeException("injector is null!");
-			if (null == resource)
-				throw new RuntimeException("resource is null!");
-			if (null == resourceValidator)
-				throw new RuntimeException("resourceValidator is null!");
-			if (null == resourceSet)
-				throw new RuntimeException("resourceSet is null!");
-			resourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE);
+			injector = new MathDSLStandaloneSetup().createInjectorAndDoEMFRegistration();
+			resourceSet = injector.getInstance(XtextResourceSet.class);
+			resourceValidator = injector.getInstance(ResourceValidatorImpl.class);
+			resource = resourceSet.createResource(URI.createURI("dummy:/example.math"));
+			resourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, true);
 		}
 
 		public void disableValidators() {

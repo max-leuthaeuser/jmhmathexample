@@ -25,7 +25,7 @@ public class MathDSLBenchmark extends AbstractDSLBenchmark {
 
 		private MathDSLGenerator generator = new MathDSLGenerator();
 
-		public String inputString;
+		protected String inputString;
 
 		@Setup
 		public void setup() {
@@ -48,7 +48,7 @@ public class MathDSLBenchmark extends AbstractDSLBenchmark {
 
 		private Calculator calc = new Calculator();
 
-		public Expression exp;
+		private Expression exp;
 
 		@Setup
 		public void setup() {
@@ -64,12 +64,10 @@ public class MathDSLBenchmark extends AbstractDSLBenchmark {
 
 	public static class ValidatorBenchmarkState extends ParserBenchmarkState {
 
-		public Expression exp;
-
 		@Setup
 		public void setup() {
 			super.setup();
-			exp = parse(inputString).getExpression();
+			parse(inputString);
 			enableValidators();
 		}
 
